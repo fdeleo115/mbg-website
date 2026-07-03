@@ -5,8 +5,7 @@ backend:
   branch: main
   # GitHub login is handled by this site's own Cloudflare Pages Functions
   # (functions/api/auth.js + functions/api/callback.js). No third-party server.
-  # TODO: update base_url to the new Cloudflare Worker/Pages URL for this site.
-  base_url: https://mbg.fdeleo115.workers.dev
+  base_url: https://mbg-website.fdeleo115.workers.dev
   auth_endpoint: api/auth
 
 media_folder: "assets/uploads"
