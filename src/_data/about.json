@@ -1,0 +1,24 @@
+{
+  "mission": "The Moot Board of Governors (MBG) unites the pre-law societies of universities across Canada under a single national body. Chaired by the presidents of its member societies, the Board coordinates national moot competitions, shares advocacy resources, and builds a community of aspiring legal advocates from coast to coast.",
+  "advocacy": "We organize and sanction national moot competitions, setting common standards so that students from any member society can compete on a level playing field.",
+  "community": "We connect pre-law society leaders across provinces, creating a network for collaboration, shared events, and mentorship between schools.",
+  "education": "We pool resources, moot problems, and training materials so every member society can prepare its students for law school and legal careers.",
+  "faq": [
+    {
+      "question": "What is the Moot Board of Governors?",
+      "answer": "The MBG is a national umbrella organization made up of pre-law societies from universities across Canada. Each member society is represented on the Board by its president or a designated representative. Together, the Board coordinates national mooting and advocacy initiatives."
+    },
+    {
+      "question": "How does a society join the Board?",
+      "answer": "Any recognized undergraduate pre-law or mooting society at a Canadian university may apply to join. Reach out through our contact page and a current Board representative will follow up with the next steps."
+    },
+    {
+      "question": "What is mooting?",
+      "answer": "Mooting is a simulated court proceeding where participants argue a legal case before a panel of judges. It develops skills in legal research, written advocacy, and oral presentation — a debate structured around a legal dispute with formal court procedure."
+    },
+    {
+      "question": "Who can compete in national competitions?",
+      "answer": "Students from any member society in good standing are eligible to compete in Board-sanctioned national competitions. Individual competitions may set their own eligibility rules, which are published on each competition's listing."
+    }
+  ]
+}

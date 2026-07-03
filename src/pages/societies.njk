@@ -1,0 +1,41 @@
+---
+layout: base.njk
+pageTitle: Member Societies
+activePage: societies
+permalink: /societies/
+---
+
+<section class="page-header">
+  <div class="container">
+    <h1>Member Societies</h1>
+    <p>The pre-law societies that make up the Moot Board of Governors, from universities across Canada.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="societies-grid">
+      {%- for society in collections.societies %}
+      <div class="society-card">
+        {% if society.data.logo %}
+        <img src="{{ society.data.logo }}" alt="{{ society.data.name }}" class="society-logo" style="object-position: {{ society.data.logoPosition or 'center' }};">
+        {% else %}
+        <div class="society-logo--placeholder">{{ society.data.shortName[0] or society.data.name[0] }}</div>
+        {% endif %}
+        {% if society.data.province %}<span class="society-province">{{ society.data.province }}</span>{% endif %}
+        <h3>{{ society.data.name }}</h3>
+        <div class="society-school">{{ society.data.university }}</div>
+        {% if society.data.blurb %}<p class="society-blurb">{{ society.data.blurb }}</p>{% endif %}
+        {% if society.data.president %}<div class="society-rep">{{ society.data.president }} <span>· Representative</span></div>{% endif %}
+        <div class="society-links">
+          {% if society.data.website %}<a href="{{ society.data.website }}" target="_blank" rel="noopener">Website</a>{% endif %}
+          {% if society.data.instagram %}<a href="{{ society.data.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+        </div>
+      </div>
+      {%- endfor %}
+      {%- if collections.societies.length == 0 %}
+      <p class="empty-state">Member societies will appear here as they join. Want your society on the Board? <a href="/contact/">Get in touch</a>.</p>
+      {%- endif %}
+    </div>
+  </div>
+</section>

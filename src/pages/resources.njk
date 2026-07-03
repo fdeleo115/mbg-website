@@ -1,0 +1,35 @@
+---
+layout: base.njk
+pageTitle: Resources
+activePage: resources
+permalink: /resources/
+---
+
+<section class="page-header">
+  <div class="container">
+    <h1>Resources</h1>
+    <p>Moot problems, competitor and judge packages, and advocacy guides shared across member societies.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="materials-grid">
+      {%- for res in collections.resources %}
+      <div class="material-card">
+        <div class="file-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1d3a2f" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        {% if res.data.category %}<div class="society-province" style="margin-bottom:10px;">{{ res.data.category }}</div>{% endif %}
+        <h4>{{ res.data.title }}</h4>
+        {% if res.data.description %}<p>{{ res.data.description }}</p>{% endif %}
+        {% set link = res.data.file or res.data.url %}
+        {% if link %}<a href="{{ link }}" class="btn btn-primary"{% if res.data.url %} target="_blank" rel="noopener"{% endif %}>{% if res.data.url %}Open{% else %}Download{% endif %}</a>{% endif %}
+      </div>
+      {%- endfor %}
+      {%- if collections.resources.length == 0 %}
+      <p class="empty-state">Resources will be published here. Member societies can submit materials through the <a href="/contact/">contact page</a>.</p>
+      {%- endif %}
+    </div>
+  </div>
+</section>

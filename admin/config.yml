@@ -1,0 +1,218 @@
+backend:
+  name: github
+  # TODO: update to the new GitHub repo for this site once it's created.
+  repo: fdeleo115/mbg-website
+  branch: main
+  # GitHub login is handled by this site's own Cloudflare Pages Functions
+  # (functions/api/auth.js + functions/api/callback.js). No third-party server.
+  # TODO: update base_url to the new Cloudflare Worker/Pages URL for this site.
+  base_url: https://mbg.fdeleo115.workers.dev
+  auth_endpoint: api/auth
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "societies"
+    label: "Member Societies"
+    label_singular: "Society"
+    description: "Add or edit the pre-law societies that are members of the Board."
+    folder: "src/societies"
+    create: true
+    identifier_field: "name"
+    slug: "{{shortName}}"
+    extension: "md"
+    fields:
+      - { label: "Society Name", name: "name", widget: "string", hint: "e.g. Guelph-Humber Pre-Law Society" }
+      - { label: "Short Name / Acronym", name: "shortName", widget: "string", hint: "e.g. GHPLS — used for the slug and placeholder logo" }
+      - { label: "University", name: "university", widget: "string", hint: "e.g. University of Guelph-Humber" }
+      - label: "Province / Territory"
+        name: "province"
+        widget: "select"
+        options:
+          - Alberta
+          - British Columbia
+          - Manitoba
+          - New Brunswick
+          - Newfoundland and Labrador
+          - Nova Scotia
+          - Ontario
+          - Prince Edward Island
+          - Quebec
+          - Saskatchewan
+          - Northwest Territories
+          - Nunavut
+          - Yukon
+      - { label: "Representative", name: "president", widget: "string", required: false, hint: "The society's president or board delegate" }
+      - { label: "Short Description", name: "blurb", widget: "text", required: false, hint: "One or two sentences about the society" }
+      - { label: "Website", name: "website", widget: "string", required: false, hint: "Full URL, e.g. https://..." }
+      - { label: "Instagram", name: "instagram", widget: "string", required: false, hint: "Full URL" }
+      - { label: "Logo", name: "logo", widget: "image", required: false, hint: "Square logo works best" }
+      - { label: "Logo Focus (drag to position)", name: "logoPosition", widget: "focal-point", required: false, default: "center", image_field: "logo" }
+
+  - name: "board"
+    label: "Board Representatives"
+    label_singular: "Representative"
+    description: "The board roster shown on the Board page."
+    folder: "src/board"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role / Title", name: "role", widget: "string", hint: "e.g. Chair, Vice-Chair, Representative — Ontario" }
+      - { label: "Society", name: "society", widget: "string", required: false, hint: "Which member society they represent" }
+      - { label: "Display Order", name: "order", widget: "number", value_type: "int", hint: "1 = shown first" }
+      - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Upload a headshot" }
+      - { label: "Photo Focus (drag to position)", name: "photoPosition", widget: "focal-point", required: false, default: "center", image_field: "photo", hint: "Drag the dot onto the face so it isn't cut off in the round headshot" }
+
+  - name: "competitions"
+    label: "Competitions"
+    label_singular: "Competition"
+    description: "National moot competitions. Upcoming ones show first."
+    folder: "src/competitions"
+    create: true
+    identifier_field: "name"
+    slug: "{{name}}-{{year}}"
+    extension: "md"
+    fields:
+      - { label: "Competition Name", name: "name", widget: "string", hint: "e.g. National Pre-Law Moot" }
+      - { label: "Year", name: "year", widget: "number", value_type: "int", required: false }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        default: "upcoming"
+        options:
+          - { label: "Upcoming", value: "upcoming" }
+          - { label: "Completed", value: "completed" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Location", name: "location", widget: "string", required: false, hint: "e.g. Toronto, ON or Virtual" }
+      - { label: "Hosted By", name: "host", widget: "string", required: false, hint: "Which member society is hosting" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Registration URL", name: "registrationUrl", widget: "string", required: false, hint: "Link to register (shown only for upcoming competitions)" }
+      - label: "Results"
+        name: "results"
+        widget: "list"
+        required: false
+        hint: "Add awards once the competition is completed"
+        fields:
+          - { label: "Award", name: "award", widget: "string", hint: "e.g. Champions, Finalists, Best Oral Advocate" }
+          - { label: "Recipients", name: "recipients", widget: "string" }
+      - label: "Card Width"
+        name: "cardWidth"
+        widget: "select"
+        required: false
+        default: "normal"
+        options:
+          - { label: "Normal (half row)", value: "normal" }
+          - { label: "Wide (full row)", value: "wide" }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
+      - label: "Photo Fit"
+        name: "photoSize"
+        widget: "select"
+        required: false
+        default: "cover"
+        options:
+          - { label: "Fill area (crop to fit)", value: "cover" }
+          - { label: "Show entire photo (may have gaps)", value: "contain" }
+      - label: "Photo Height"
+        name: "photoHeight"
+        widget: "select"
+        required: false
+        default: "medium"
+        options:
+          - { label: "Short", value: "short" }
+          - { label: "Medium", value: "medium" }
+          - { label: "Tall", value: "tall" }
+      - { label: "Photo Focus (drag to position)", name: "photoPosition", widget: "focal-point", required: false, default: "center", image_field: "photo" }
+
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    description: "Upcoming national events and deadlines."
+    folder: "src/events"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Event Name", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Time", name: "time", widget: "string", hint: "e.g. 5:00 PM - 7:00 PM", required: false }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
+      - label: "Photo Fit"
+        name: "photoSize"
+        widget: "select"
+        required: false
+        default: "cover"
+        options:
+          - { label: "Fill area (crop to fit)", value: "cover" }
+          - { label: "Show entire photo (may have gaps)", value: "contain" }
+      - { label: "Photo Focus (drag to position)", name: "photoPosition", widget: "focal-point", required: false, default: "center", image_field: "photo" }
+
+  - name: "news"
+    label: "News & Announcements"
+    label_singular: "Post"
+    description: "Posts shown on the News page. Each becomes its own article."
+    folder: "src/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Author", name: "author", widget: "string", required: false }
+      - { label: "Summary", name: "summary", widget: "text", hint: "Short blurb shown on the News page card" }
+      - { label: "Header Photo", name: "photo", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown", hint: "The full article" }
+
+  - name: "resources"
+    label: "Resources"
+    label_singular: "Resource"
+    description: "Guides, moot problems, and packages shown on the Resources page."
+    folder: "src/resources"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        required: false
+        options: ["Guide", "Moot Problem", "Competitor Package", "Judge Package", "Template", "Link"]
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Display Order", name: "order", widget: "number", value_type: "int", required: false, hint: "1 = shown first" }
+      - { label: "File (upload)", name: "file", widget: "file", required: false, hint: "Upload a PDF or document to download" }
+      - { label: "External Link", name: "url", widget: "string", required: false, hint: "Use instead of a file to link out to a resource" }
+
+  - name: "pages"
+    label: "Page Content"
+    description: "Edit the text content on each page."
+    files:
+      - label: "Site Settings"
+        name: "site-settings"
+        file: "src/_data/site.json"
+        fields:
+          - { label: "Site Title", name: "title", widget: "string" }
+          - { label: "Short Title (nav bar)", name: "shortTitle", widget: "string" }
+          - { label: "Site Description", name: "description", widget: "text", hint: "Shows on the homepage and footer" }
+          - { label: "Instagram URL", name: "instagram", widget: "string" }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string" }
+          - { label: "Contact Email", name: "email", widget: "string", required: false }
+          - { label: "Site URL", name: "url", widget: "string", hint: "Full site URL, used in the sitemap" }
+
+      - label: "About Page"
+        name: "about-page"
+        file: "src/_data/about.json"
+        fields:
+          - { label: "Mandate Statement", name: "mission", widget: "text", hint: "The main paragraph at the top of the About page" }
+          - { label: "National Competitions Description", name: "advocacy", widget: "text" }
+          - { label: "National Network Description", name: "community", widget: "text" }
+          - { label: "Shared Resources Description", name: "education", widget: "text" }
+          - label: "FAQ"
+            name: "faq"
+            widget: "list"
+            hint: "Add, edit, or reorder frequently asked questions"
+            fields:
+              - { label: "Question", name: "question", widget: "string" }
+              - { label: "Answer", name: "answer", widget: "text" }

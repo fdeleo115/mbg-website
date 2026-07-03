@@ -1,0 +1,51 @@
+---
+layout: base.njk
+pageTitle: Competitions
+activePage: competitions
+permalink: /competitions/
+---
+
+<section class="page-header">
+  <div class="container">
+    <h1>National Competitions</h1>
+    <p>Moot competitions sanctioned by the Board and open to students from member societies across Canada.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="wins-grid">
+      {%- for comp in collections.competitions %}
+      <div class="win-card {% if comp.data.photo %}win-card--has-photo{% endif %} {% if comp.data.cardWidth == 'wide' %}win-card--wide{% endif %}">
+        {% if comp.data.photo %}
+        <div class="win-card-photo win-card-photo--{{ comp.data.photoHeight or 'medium' }}">
+          <img src="{{ comp.data.photo }}" alt="{{ comp.data.name }}" style="object-fit: {{ comp.data.photoSize or 'cover' }}; object-position: {{ comp.data.photoPosition or 'center' }};">
+        </div>
+        {% endif %}
+        <div class="win-card-content">
+          <span class="comp-status comp-status--{{ comp.data.status or 'upcoming' }}">{{ comp.data.status or 'upcoming' }}</span>
+          <div class="competition">{{ comp.data.name }}{% if comp.data.year %} {{ comp.data.year }}{% endif %}</div>
+          <div class="comp-meta">
+            {% if comp.data.date %}<strong>{{ comp.data.date | dateFormat }}</strong>{% endif %}
+            {% if comp.data.location %} · {{ comp.data.location }}{% endif %}
+            {% if comp.data.host %}<br>Hosted by {{ comp.data.host }}{% endif %}
+          </div>
+          {% if comp.data.description %}<p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 14px;">{{ comp.data.description }}</p>{% endif %}
+          {%- for result in comp.data.results %}
+          <div class="achievement">
+            <span class="badge">{{ result.award }}</span>
+            <span class="names">{{ result.recipients }}</span>
+          </div>
+          {%- endfor %}
+          {% if comp.data.registrationUrl and comp.data.status != 'completed' %}
+          <a href="{{ comp.data.registrationUrl }}" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:16px; padding:10px 24px; font-size:0.85rem;">Register</a>
+          {% endif %}
+        </div>
+      </div>
+      {%- endfor %}
+      {%- if collections.competitions.length == 0 %}
+      <p class="empty-state">National competitions will be listed here once announced.</p>
+      {%- endif %}
+    </div>
+  </div>
+</section>

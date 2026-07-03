@@ -1,0 +1,35 @@
+---
+layout: base.njk
+pageTitle: The Board
+activePage: board
+permalink: /board/
+---
+
+<section class="page-header">
+  <div class="container">
+    <h1>The Board</h1>
+    <p>The representatives who lead the Moot Board of Governors — the presidents and delegates of our member societies.</p>
+  </div>
+</section>
+
+<section class="bg-cream">
+  <div class="container">
+    <div class="exec-grid">
+      {%- for member in collections.board %}
+      <div class="exec-card">
+        {% if member.data.photo %}
+        <img src="{{ member.data.photo }}" alt="{{ member.data.name }}" class="avatar-img" style="object-position: {{ member.data.photoPosition or 'center' }};">
+        {% else %}
+        <div class="avatar">{{ member.data.name[0] }}</div>
+        {% endif %}
+        <h4>{{ member.data.name }}</h4>
+        <div class="role">{{ member.data.role }}</div>
+        {% if member.data.society %}<div class="society-school" style="margin-top:6px;">{{ member.data.society }}</div>{% endif %}
+      </div>
+      {%- endfor %}
+      {%- if collections.board.length == 0 %}
+      <p class="empty-state">Board representatives will appear here.</p>
+      {%- endif %}
+    </div>
+  </div>
+</section>

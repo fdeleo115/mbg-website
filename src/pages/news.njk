@@ -1,0 +1,34 @@
+---
+layout: base.njk
+pageTitle: News
+activePage: news
+permalink: /news/
+---
+
+<section class="page-header">
+  <div class="container">
+    <h1>News &amp; Announcements</h1>
+    <p>Updates from the Moot Board of Governors and its member societies.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="news-grid">
+      {%- for post in collections.news %}
+      <a href="{{ post.url }}" class="news-card">
+        {% if post.data.photo %}<img src="{{ post.data.photo }}" alt="{{ post.data.title }}" class="news-card-photo">{% endif %}
+        <div class="news-card-body">
+          <div class="news-date">{{ post.data.date | dateFormat }}</div>
+          <h3>{{ post.data.title }}</h3>
+          <p>{{ post.data.summary }}</p>
+          {% if post.data.author %}<div class="news-meta">By {{ post.data.author }}</div>{% endif %}
+        </div>
+      </a>
+      {%- endfor %}
+      {%- if collections.news.length == 0 %}
+      <p class="empty-state">No announcements yet. Check back soon.</p>
+      {%- endif %}
+    </div>
+  </div>
+</section>

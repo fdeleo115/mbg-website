@@ -1,0 +1,21 @@
+---
+layout: base.njk
+activePage: news
+---
+
+<section class="page-header">
+  <div class="container">
+    <div class="legal-updated">{{ date | dateFormat }}{% if author %} · {{ author }}{% endif %}</div>
+    <h1>{{ title }}</h1>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="legal content-block">
+      {% if photo %}<img src="{{ photo }}" alt="{{ title }}" style="width:100%; border-radius:12px; margin-bottom:24px; object-fit:cover;">{% endif %}
+      {{ content | safe }}
+      <p style="margin-top:32px;"><a href="/news/" style="color: var(--peach); font-weight:600;">← Back to all news</a></p>
+    </div>
+  </div>
+</section>
