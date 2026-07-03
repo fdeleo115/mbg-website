@@ -1,7 +1,7 @@
 ---
 name: Representative TBA
-role: Vice-Chair
+role: Treasurer
 society: UBC Pre-Law Society
-order: 2
 status: current
+order: 2
 ---
