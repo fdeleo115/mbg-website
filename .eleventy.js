@@ -21,6 +21,22 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  // Elected officials (exec who run the Board), ordered by display order.
+  eleventyConfig.addCollection("officials", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/officials/*.md").sort((a, b) => {
+      return (a.data.order || 99) - (b.data.order || 99);
+    });
+  });
+
+  // Individual pre-law members recognized by the Board. Sorted alphabetically
+  // by name so the no-JS fallback matches the directory's default sort (the
+  // page also offers client-side search + re-sorting).
+  eleventyConfig.addCollection("members", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("src/members/*.md").sort((a, b) => {
+      return (a.data.name || "").localeCompare(b.data.name || "");
+    });
+  });
+
   // National competitions. Upcoming first (soonest date), then completed (newest first).
   eleventyConfig.addCollection("competitions", function (collectionApi) {
     const items = collectionApi.getFilteredByGlob("src/competitions/*.md");
@@ -68,6 +84,13 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("dayNum", function (date) {
     if (!date) return "";
     return new Date(date).getDate();
+  });
+
+  // Filter a collection by a data attribute (Nunjucks lacks selectattr).
+  // Usage: collections.board | where("status", "current")
+  eleventyConfig.addFilter("where", function (arr, key, value) {
+    if (!Array.isArray(arr)) return [];
+    return arr.filter((item) => (item.data && item.data[key]) === value);
   });
 
   return {

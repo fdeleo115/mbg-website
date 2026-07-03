@@ -85,10 +85,27 @@
       var imageField =
         (field && field.get && field.get("image_field")) || "photo";
 
-      var path =
-        this.props.entry && this.props.entry.getIn
-          ? this.props.entry.getIn(["data", imageField])
-          : null;
+      var entry = this.props.entry;
+      var path = null;
+      if (entry && entry.getIn) {
+        // Top-level image field (board, society logo, competitions, events…).
+        path = entry.getIn(["data", imageField]);
+        // If empty, we may be inside a list item (e.g. a society's
+        // Representatives list). Decap's forID encodes the list name + index,
+        // e.g. "…representatives-0-photoPosition…". Parse it to find the
+        // sibling image so the drag pad still shows the uploaded photo.
+        if (!path) {
+          try {
+            var forID = String(this.props.forID || "");
+            var m = forID.match(/([A-Za-z_][A-Za-z0-9_]*)[-.](\d+)[-.]/);
+            if (m) {
+              var listName = m[1];
+              var idx = parseInt(m[2], 10);
+              path = entry.getIn(["data", listName, idx, imageField]);
+            }
+          } catch (e) { /* fall through to checkerboard */ }
+        }
+      }
       var src = assetUrl(this.props.getAsset, path);
 
       var padStyle = {
@@ -302,7 +319,11 @@
     { name: "societies", field: "logo", w: 120, h: 120, radius: "50%",
       fitField: null, defaultFit: "cover", note: "Society logo" },
     { name: "board", field: "photo", w: 140, h: 140, radius: "50%",
-      fitField: null, defaultFit: "cover", note: "Representative headshot" }
+      fitField: "photoSize", defaultFit: "cover", note: "Representative headshot" },
+    { name: "officials", field: "photo", w: 140, h: 140, radius: "50%",
+      fitField: "photoSize", defaultFit: "cover", note: "Official headshot" },
+    { name: "members", field: "photo", w: 120, h: 120, radius: "50%",
+      fitField: "photoSize", defaultFit: "cover", note: "Member headshot" }
   ];
 
   PREVIEWS.forEach(function (opts) {

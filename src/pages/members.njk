@@ -1,0 +1,115 @@
+---
+layout: base.njk
+pageTitle: Pre-Law Members
+activePage: members
+permalink: /members/
+---
+
+<section class="page-header">
+  <div class="container">
+    <h1>Pre-Law Members</h1>
+    <p>Individual pre-law students recognized as members by the Moot Board of Governors.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="directory-controls">
+      <div class="dir-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="memberSearch" placeholder="Search for your name, university, or society…" autocomplete="off" aria-label="Search members">
+      </div>
+      <label class="dir-sort">
+        <span>Sort</span>
+        <select id="memberSort" aria-label="Sort members">
+          <option value="name-asc">Name (A–Z)</option>
+          <option value="name-desc">Name (Z–A)</option>
+          <option value="university">University</option>
+          <option value="year">Member Since</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="dir-count" id="memberCount" aria-live="polite"></div>
+
+    <div class="member-directory" id="memberDirectory">
+      {%- for m in collections.members %}
+      <div class="member-card"
+           data-name="{{ m.data.name | lower }}"
+           data-university="{{ (m.data.university or '') | lower }}"
+           data-society="{{ (m.data.society or '') | lower }}"
+           data-year="{{ m.data.year or '' }}">
+        <div class="member-card-avatar">
+          {% if m.data.photo %}
+          <img src="{{ m.data.photo }}" alt="{{ m.data.name }}" loading="lazy" style="object-fit: {{ m.data.photoSize or 'cover' }}; object-position: {{ m.data.photoPosition or 'center' }};{% if m.data.photoZoom and m.data.photoZoom != 1 %} transform: scale({{ m.data.photoZoom }}); transform-origin: {{ m.data.photoPosition or 'center' }};{% endif %}">
+          {% else %}
+          <span class="member-card-initial">{{ m.data.name[0] }}</span>
+          {% endif %}
+        </div>
+        <div class="member-card-info">
+          <div class="member-card-name">{{ m.data.name }}</div>
+          <div class="member-card-meta">
+            {%- if m.data.university %}{{ m.data.university }}{% endif -%}
+            {%- if m.data.society %}{% if m.data.university %} · {% endif %}{{ m.data.society }}{% endif -%}
+          </div>
+        </div>
+        {% if m.data.year %}<span class="member-card-year">Since {{ m.data.year }}</span>{% endif %}
+      </div>
+      {%- endfor %}
+    </div>
+
+    <p class="empty-state" id="memberEmpty" style="display:none;">No members match your search.</p>
+    {%- if collections.members.length == 0 %}
+    <p class="empty-state">Recognized pre-law members will be listed here.</p>
+    {%- endif %}
+  </div>
+</section>
+
+<script>
+(function () {
+  var directory = document.getElementById("memberDirectory");
+  if (!directory) return;
+  var search = document.getElementById("memberSearch");
+  var sortSel = document.getElementById("memberSort");
+  var countEl = document.getElementById("memberCount");
+  var emptyEl = document.getElementById("memberEmpty");
+  var cards = Array.prototype.slice.call(directory.querySelectorAll(".member-card"));
+  var total = cards.length;
+
+  function norm(s) { return (s || "").toLowerCase(); }
+
+  function applyFilter() {
+    var q = norm(search && search.value).trim();
+    var shown = 0;
+    cards.forEach(function (c) {
+      var hay = c.getAttribute("data-name") + " " +
+                c.getAttribute("data-university") + " " +
+                c.getAttribute("data-society");
+      var match = !q || hay.indexOf(q) !== -1;
+      c.style.display = match ? "" : "none";
+      if (match) shown++;
+    });
+    if (emptyEl) emptyEl.style.display = shown === 0 ? "" : "none";
+    if (countEl) {
+      countEl.textContent = q
+        ? "Showing " + shown + " of " + total + " members"
+        : total + (total === 1 ? " member" : " members");
+    }
+  }
+
+  function applySort() {
+    var mode = sortSel ? sortSel.value : "name-asc";
+    var sorted = cards.slice().sort(function (a, b) {
+      if (mode === "name-desc") return b.getAttribute("data-name").localeCompare(a.getAttribute("data-name"));
+      if (mode === "university") return a.getAttribute("data-university").localeCompare(b.getAttribute("data-university")) || a.getAttribute("data-name").localeCompare(b.getAttribute("data-name"));
+      if (mode === "year") return a.getAttribute("data-year").localeCompare(b.getAttribute("data-year")) || a.getAttribute("data-name").localeCompare(b.getAttribute("data-name"));
+      return a.getAttribute("data-name").localeCompare(b.getAttribute("data-name"));
+    });
+    sorted.forEach(function (c) { directory.appendChild(c); });
+  }
+
+  if (search) search.addEventListener("input", applyFilter);
+  if (sortSel) sortSel.addEventListener("change", function () { applySort(); applyFilter(); });
+  applyFilter();
+})();
+</script>

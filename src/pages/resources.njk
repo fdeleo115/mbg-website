@@ -14,17 +14,18 @@ permalink: /resources/
 
 <section>
   <div class="container">
-    <div class="materials-grid">
+    <div class="resource-ledger">
       {%- for res in collections.resources %}
-      <div class="material-card">
-        <div class="file-icon">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1d3a2f" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      {% set link = res.data.file or res.data.url %}
+      <div class="resource-entry">
+        <div class="resource-main">
+          {% if res.data.category %}<span class="resource-cat">{{ res.data.category }}</span>{% endif %}
+          <h3>{{ res.data.title }}</h3>
+          {% if res.data.description %}<p>{{ res.data.description }}</p>{% endif %}
         </div>
-        {% if res.data.category %}<div class="society-province" style="margin-bottom:10px;">{{ res.data.category }}</div>{% endif %}
-        <h4>{{ res.data.title }}</h4>
-        {% if res.data.description %}<p>{{ res.data.description }}</p>{% endif %}
-        {% set link = res.data.file or res.data.url %}
-        {% if link %}<a href="{{ link }}" class="btn btn-primary"{% if res.data.url %} target="_blank" rel="noopener"{% endif %}>{% if res.data.url %}Open{% else %}Download{% endif %}</a>{% endif %}
+        {% if link %}
+        <a href="{{ link }}" class="btn btn-primary resource-action"{% if res.data.url %} target="_blank" rel="noopener"{% endif %}>{% if res.data.url %}Open{% else %}Download{% endif %}</a>
+        {% endif %}
       </div>
       {%- endfor %}
       {%- if collections.resources.length == 0 %}

@@ -1,0 +1,22 @@
+{
+  "eyebrow": "The Board's Flagship Weekend",
+  "title": "National Championship & Gala",
+  "intro": "Each year the Moot Board of Governors brings its member societies together for a marquee weekend — a national championship moot followed by an awards banquet honouring the year in pre-law advocacy across Canada.",
+  "competitionStatus": "proposed",
+  "competitionTitle": "The Governors' Cup",
+  "competitionText": "A proposed national championship moot that would crown the top pre-law team in the country. Member societies would send their strongest two-person teams to argue a shared appellate problem before panels of legal professionals. This event is currently under consideration by the Board and depends on host capacity and funding.",
+  "banquetStatus": "planned",
+  "banquetTitle": "The Governors' Gala",
+  "banquetText": "The championship weekend closes with a formal banquet celebrating the season's achievements. The Gala gathers representatives, competitors, and officials from every member society for dinner and the presentation of the Board's annual awards.",
+  "banquetDate": "",
+  "banquetLocation": "",
+  "awardsIntro": "Presented each year at the Governors' Gala to recognize excellence across the national pre-law community.",
+  "awards": [
+    { "title": "Best-Run Competition", "description": "For the member society that hosted the most outstanding moot of the year — logistics, judging, and competitor experience.", "recipient": "" },
+    { "title": "Society of the Year", "description": "For the member society that did the most to advance pre-law mooting and advocacy over the season.", "recipient": "" },
+    { "title": "Most Accomplished Team", "description": "For the two-person team with the strongest competitive record across the year's national moots.", "recipient": "" },
+    { "title": "Best Oral Advocate", "description": "For the top individual advocate across the season, as recognized by judging panels.", "recipient": "" },
+    { "title": "Rising Society", "description": "For an outstanding newcomer to the Board making an immediate mark on national mooting.", "recipient": "" },
+    { "title": "Distinguished Service", "description": "For exceptional contribution to the Board and the growth of pre-law advocacy in Canada.", "recipient": "" }
+  ]
+}

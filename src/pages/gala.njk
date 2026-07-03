@@ -1,0 +1,81 @@
+---
+layout: base.njk
+pageTitle: Championship & Gala
+activePage: gala
+permalink: /gala/
+---
+
+{% set statusLabels = { "proposed": "Under Consideration", "planned": "Planned", "confirmed": "Confirmed" } %}
+
+<section class="gala-hero">
+  <div class="container">
+    <span class="eyebrow">{{ gala.eyebrow }}</span>
+    <h1>{{ gala.title }}</h1>
+    <p>{{ gala.intro }}</p>
+    <div class="gala-chips">
+      <span class="gala-chip">
+        <span class="gala-chip-label">The Championship</span>
+        <span class="event-status event-status--{{ gala.competitionStatus }}">{{ statusLabels[gala.competitionStatus] }}</span>
+      </span>
+      <span class="gala-chip">
+        <span class="gala-chip-label">The Banquet</span>
+        <span class="event-status event-status--{{ gala.banquetStatus }}">{{ statusLabels[gala.banquetStatus] }}</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="gala-feature">
+      <div class="gala-feature-side">
+        <span class="event-status event-status--{{ gala.competitionStatus }}">{{ statusLabels[gala.competitionStatus] }}</span>
+        <span class="gala-feature-kicker">The Competition</span>
+      </div>
+      <div class="gala-feature-body">
+        <h2>{{ gala.competitionTitle }}</h2>
+        <p>{{ gala.competitionText }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-cream">
+  <div class="container">
+    <div class="gala-feature">
+      <div class="gala-feature-side">
+        <span class="event-status event-status--{{ gala.banquetStatus }}">{{ statusLabels[gala.banquetStatus] }}</span>
+        <span class="gala-feature-kicker">The Banquet</span>
+      </div>
+      <div class="gala-feature-body">
+        <h2>{{ gala.banquetTitle }}</h2>
+        <p>{{ gala.banquetText }}</p>
+        {% if gala.banquetDate or gala.banquetLocation %}
+        <div class="gala-meta">
+          {% if gala.banquetDate %}<span class="gala-meta-item"><strong>When</strong> {{ gala.banquetDate }}</span>{% endif %}
+          {% if gala.banquetLocation %}<span class="gala-meta-item"><strong>Where</strong> {{ gala.banquetLocation }}</span>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="awards-head">
+      <span class="eyebrow">Presented at the Gala</span>
+      <h2>Annual Awards</h2>
+      {% if gala.awardsIntro %}<p>{{ gala.awardsIntro }}</p>{% endif %}
+    </div>
+    <div class="awards-grid">
+      {%- for award in gala.awards %}
+      <div class="award-card">
+        <span class="award-mark">&#10022;</span>
+        <h3>{{ award.title }}</h3>
+        {% if award.description %}<p>{{ award.description }}</p>{% endif %}
+        <div class="award-recipient">{% if award.recipient %}{{ award.recipient }}{% else %}Recipient to be announced{% endif %}</div>
+      </div>
+      {%- endfor %}
+      {%- if gala.awards.length == 0 %}
+      <p class="empty-state">Award categories will be listed here.</p>
+      {%- endif %}
+    </div>
+  </div>
+</section>

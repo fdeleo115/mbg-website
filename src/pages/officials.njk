@@ -1,29 +1,29 @@
 ---
 layout: base.njk
-pageTitle: The Board
-activePage: board
-permalink: /board/
+pageTitle: Elected Officials
+activePage: officials
+permalink: /officials/
 ---
 
 <section class="page-header">
   <div class="container">
-    <h1>The Board</h1>
-    <p>The society representatives who govern the Moot Board of Governors — each the president or delegate of a member society.</p>
+    <h1>Elected Officials</h1>
+    <p>The elected executive who organize and run the Moot Board of Governors day to day — distinct from the representatives who sit on the Board.</p>
   </div>
 </section>
 
-{% set currentReps = collections.board | where("status", "current") %}
-{% set alumniReps = collections.board | where("status", "alumni") %}
+{% set currentOfficials = collections.officials | where("status", "current") %}
+{% set alumniOfficials = collections.officials | where("status", "alumni") %}
 
 <section class="bg-cream">
   <div class="container">
     <div class="section-header">
-      <span class="eyebrow">In Session</span>
-      <h2>Current Board</h2>
+      <span class="eyebrow">In Office</span>
+      <h2>Current Officials</h2>
       <div class="line"></div>
     </div>
     <div class="exec-grid">
-      {%- for m in currentReps %}
+      {%- for m in currentOfficials %}
       <div class="exec-card">
         <div class="exec-avatar">
           {% if m.data.photo %}
@@ -33,27 +33,27 @@ permalink: /board/
           {% endif %}
         </div>
         <h4>{{ m.data.name }}</h4>
-        <div class="role">{{ m.data.role or 'Representative' }}</div>
+        <div class="role">{{ m.data.role }}</div>
         {% if m.data.society %}<div class="society-school">{{ m.data.society }}</div>{% endif %}
       </div>
       {%- endfor %}
-      {%- if currentReps.length == 0 %}
-      <p class="empty-state">Board representatives will appear here.</p>
+      {%- if currentOfficials.length == 0 %}
+      <p class="empty-state">Elected officials will appear here.</p>
       {%- endif %}
     </div>
   </div>
 </section>
 
-{% if alumniReps.length %}
+{% if alumniOfficials.length %}
 <section>
   <div class="container">
     <div class="section-header">
       <span class="eyebrow">Past Service</span>
-      <h2>Alumni Board</h2>
+      <h2>Alumni Officials</h2>
       <div class="line"></div>
     </div>
     <div class="exec-grid exec-grid--alumni">
-      {%- for m in alumniReps %}
+      {%- for m in alumniOfficials %}
       <div class="exec-card exec-card--alumni">
         <div class="exec-avatar">
           {% if m.data.photo %}
@@ -63,8 +63,7 @@ permalink: /board/
           {% endif %}
         </div>
         <h4>{{ m.data.name }}</h4>
-        <div class="role">{{ m.data.role or 'Representative' }}</div>
-        {% if m.data.society %}<div class="society-school">{{ m.data.society }}</div>{% endif %}
+        <div class="role">{{ m.data.role }}</div>
         {% if m.data.term %}<div class="exec-term">{{ m.data.term }}</div>{% endif %}
       </div>
       {%- endfor %}

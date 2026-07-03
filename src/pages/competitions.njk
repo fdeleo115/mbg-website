@@ -14,34 +14,41 @@ permalink: /competitions/
 
 <section>
   <div class="container">
-    <div class="wins-grid">
+    <div class="comp-ledger">
       {%- for comp in collections.competitions %}
-      <div class="win-card {% if comp.data.photo %}win-card--has-photo{% endif %} {% if comp.data.cardWidth == 'wide' %}win-card--wide{% endif %}">
-        {% if comp.data.photo %}
-        <div class="win-card-photo win-card-photo--{{ comp.data.photoHeight or 'medium' }}">
-          <img src="{{ comp.data.photo }}" alt="{{ comp.data.name }}" style="object-fit: {{ comp.data.photoSize or 'cover' }}; object-position: {{ comp.data.photoPosition or 'center' }};">
-        </div>
-        {% endif %}
-        <div class="win-card-content">
+      <article class="comp-entry comp-entry--{{ comp.data.status or 'upcoming' }}">
+        <div class="comp-rail">
           <span class="comp-status comp-status--{{ comp.data.status or 'upcoming' }}">{{ comp.data.status or 'upcoming' }}</span>
-          <div class="competition">{{ comp.data.name }}{% if comp.data.year %} {{ comp.data.year }}{% endif %}</div>
+          {% if comp.data.year %}<div class="comp-year">{{ comp.data.year }}</div>{% endif %}
+        </div>
+        <div class="comp-detail">
+          {% if comp.data.photo %}
+          <div class="comp-photo comp-photo--{{ comp.data.photoHeight or 'medium' }}">
+            <img src="{{ comp.data.photo }}" alt="{{ comp.data.name }}" style="object-fit: {{ comp.data.photoSize or 'cover' }}; object-position: {{ comp.data.photoPosition or 'center' }};">
+          </div>
+          {% endif %}
+          <h2 class="comp-name">{{ comp.data.name }}{% if comp.data.year %} {{ comp.data.year }}{% endif %}</h2>
           <div class="comp-meta">
             {% if comp.data.date %}<strong>{{ comp.data.date | dateFormat }}</strong>{% endif %}
             {% if comp.data.location %} · {{ comp.data.location }}{% endif %}
             {% if comp.data.host %}<br>Hosted by {{ comp.data.host }}{% endif %}
           </div>
-          {% if comp.data.description %}<p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 14px;">{{ comp.data.description }}</p>{% endif %}
-          {%- for result in comp.data.results %}
-          <div class="achievement">
-            <span class="badge">{{ result.award }}</span>
-            <span class="names">{{ result.recipients }}</span>
+          {% if comp.data.description %}<p class="comp-desc">{{ comp.data.description }}</p>{% endif %}
+          {% if comp.data.results.length %}
+          <div class="comp-results">
+            {%- for result in comp.data.results %}
+            <div class="comp-result">
+              <span class="badge">{{ result.award }}</span>
+              <span class="names">{{ result.recipients }}</span>
+            </div>
+            {%- endfor %}
           </div>
-          {%- endfor %}
+          {% endif %}
           {% if comp.data.registrationUrl and comp.data.status != 'completed' %}
-          <a href="{{ comp.data.registrationUrl }}" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:16px; padding:10px 24px; font-size:0.85rem;">Register</a>
+          <a href="{{ comp.data.registrationUrl }}" target="_blank" rel="noopener" class="btn btn-primary comp-register">Register</a>
           {% endif %}
         </div>
-      </div>
+      </article>
       {%- endfor %}
       {%- if collections.competitions.length == 0 %}
       <p class="empty-state">National competitions will be listed here once announced.</p>

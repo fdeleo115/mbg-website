@@ -1,28 +1,66 @@
 ---
 layout: base.njk
-pageTitle: News
+pageTitle: News & Events
 activePage: news
 permalink: /news/
 ---
 
 <section class="page-header">
   <div class="container">
-    <h1>News &amp; Announcements</h1>
-    <p>Updates from the Moot Board of Governors and its member societies.</p>
+    <h1>News &amp; Events</h1>
+    <p>Announcements from the Board and its member societies, plus upcoming national events and deadlines.</p>
+  </div>
+</section>
+
+<section class="bg-cream">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">On the Calendar</span>
+      <h2>Upcoming Events</h2>
+      <div class="line"></div>
+    </div>
+    <div class="event-ledger">
+      {%- for event in collections.events %}
+      <div class="event-entry">
+        <div class="event-date">
+          <span class="event-month">{{ event.data.date | monthShort }}</span>
+          <span class="event-day">{{ event.data.date | dayNum }}</span>
+        </div>
+        <div class="event-body">
+          <h3>{{ event.data.title }}</h3>
+          <p>{{ event.data.description }}</p>
+          <div class="event-tags">
+            {% if event.data.time %}<span class="event-tag">{{ event.data.time }}</span>{% endif %}
+            {% if event.data.location %}<span class="event-tag">{{ event.data.location }}</span>{% endif %}
+          </div>
+        </div>
+      </div>
+      {%- endfor %}
+      {%- if collections.events.length == 0 %}
+      <p class="empty-state">No upcoming events scheduled. Follow us on <a href="{{ site.instagram }}">Instagram</a> for announcements.</p>
+      {%- endif %}
+    </div>
   </div>
 </section>
 
 <section>
   <div class="container">
-    <div class="news-grid">
+    <div class="section-header">
+      <span class="eyebrow">From the Board</span>
+      <h2>Latest News</h2>
+      <div class="line"></div>
+    </div>
+    <div class="news-ledger">
       {%- for post in collections.news %}
-      <a href="{{ post.url }}" class="news-card">
-        {% if post.data.photo %}<img src="{{ post.data.photo }}" alt="{{ post.data.title }}" class="news-card-photo">{% endif %}
-        <div class="news-card-body">
-          <div class="news-date">{{ post.data.date | dateFormat }}</div>
+      <a href="{{ post.url }}" class="news-entry">
+        {% if post.data.photo %}
+        <div class="news-entry-photo"><img src="{{ post.data.photo }}" alt="{{ post.data.title }}"></div>
+        {% endif %}
+        <div class="news-entry-body">
+          <div class="news-date">{{ post.data.date | dateFormat }}{% if post.data.author %} · {{ post.data.author }}{% endif %}</div>
           <h3>{{ post.data.title }}</h3>
-          <p>{{ post.data.summary }}</p>
-          {% if post.data.author %}<div class="news-meta">By {{ post.data.author }}</div>{% endif %}
+          {% if post.data.summary %}<p>{{ post.data.summary }}</p>{% endif %}
+          <span class="news-readmore">Read more →</span>
         </div>
       </a>
       {%- endfor %}

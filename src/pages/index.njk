@@ -5,74 +5,60 @@ activePage: home
 permalink: /
 ---
 
-<section class="home-portal">
+<section class="reg-hero">
   <div class="container">
-    <div class="home-intro">
-      <img src="/assets/logo.jpg" alt="{{ site.shortTitle }} Logo" class="home-logo">
-      <div class="home-intro-text">
-        <div class="tag">Canada</div>
-        <h1>Moot Board of Governors</h1>
+    <div class="reg-hero-inner">
+      <div class="reg-hero-seal">
+        <img src="/assets/logo.jpg" alt="{{ site.shortTitle }} crest">
+      </div>
+      <div class="reg-hero-text">
+        <span class="eyebrow">National Association &middot; Canada</span>
+        <h1>Moot Board of <em>Governors</em></h1>
         <p>{{ site.description }}</p>
+        <div class="reg-hero-actions">
+          <a href="/societies/" class="btn btn-primary">Member Societies</a>
+          <a href="/contact/" class="btn btn-outline">Join the Board</a>
+        </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="portal-grid">
-      <a href="/about/" class="portal-card">
-        <span class="portal-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+<section class="reg-index">
+  <div class="container">
+    <div class="reg-index-head">
+      <div>
+        <span class="eyebrow">The Register</span>
+        <h2>Navigate the Board</h2>
+      </div>
+      <p>Everything the Board maintains — societies, governance, competitions and resources — indexed below.</p>
+    </div>
+
+    <div class="reg-list">
+      {% set sections = [
+        { num: "01", url: "/about/", title: "About", desc: "Our mandate, mission & frequently asked questions" },
+        { num: "02", url: "/societies/", title: "Member Societies", desc: "Pre-law & mooting societies across Canada" },
+        { num: "03", url: "/members/", title: "Pre-Law Members", desc: "Individual members recognized by the Board" },
+        { num: "04", url: "/board/", title: "The Board", desc: "The society representatives who govern the association" },
+        { num: "05", url: "/officials/", title: "Elected Officials", desc: "The exec who organize & run the Board" },
+        { num: "06", url: "/competitions/", title: "Competitions", desc: "National moot competitions & results" },
+        { num: "07", url: "/gala/", title: "Championship & Gala", desc: "The Board's flagship weekend & annual awards" },
+        { num: "08", url: "/news/", title: "News & Events", desc: "Announcements, upcoming events & deadlines" },
+        { num: "09", url: "/resources/", title: "Resources", desc: "Moot problems, packages & advocacy guides" },
+        { num: "10", url: "/contact/", title: "Contact", desc: "Join, compete, or partner with the Board" }
+      ] %}
+      {%- for s in sections %}
+      <a href="{{ s.url }}" class="reg-row">
+        <div class="reg-num">{{ s.num }}</div>
+        <div class="reg-row-main">
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.desc }}</p>
+        </div>
+        <span class="reg-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </span>
-        <h3>About</h3>
-        <p>Our mandate &amp; FAQ</p>
       </a>
-      <a href="/societies/" class="portal-card">
-        <span class="portal-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
-        </span>
-        <h3>Member Societies</h3>
-        <p>Pre-law societies across Canada</p>
-      </a>
-      <a href="/board/" class="portal-card">
-        <span class="portal-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </span>
-        <h3>The Board</h3>
-        <p>Our national representatives</p>
-      </a>
-      <a href="/competitions/" class="portal-card">
-        <span class="portal-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg>
-        </span>
-        <h3>Competitions</h3>
-        <p>National moot competitions</p>
-      </a>
-      <a href="/events/" class="portal-card">
-        <span class="portal-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
-        </span>
-        <h3>Events</h3>
-        <p>National events &amp; deadlines</p>
-      </a>
-      <a href="/news/" class="portal-card">
-        <span class="portal-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/></svg>
-        </span>
-        <h3>News</h3>
-        <p>Announcements &amp; updates</p>
-      </a>
-      <a href="/resources/" class="portal-card">
-        <span class="portal-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h10l6 6v10H4V4z"/><path d="M14 4v6h6M9 14h6M9 18h6"/></svg>
-        </span>
-        <h3>Resources</h3>
-        <p>Moot problems &amp; guides</p>
-      </a>
-      <a href="/contact/" class="portal-card">
-        <span class="portal-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-        </span>
-        <h3>Contact</h3>
-        <p>Join or reach out</p>
-      </a>
+      {%- endfor %}
     </div>
   </div>
 </section>

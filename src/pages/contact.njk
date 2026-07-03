@@ -18,21 +18,21 @@ permalink: /contact/
       <div class="contact-info">
         <h3>Get in Touch</h3>
         <p>Whether you represent a pre-law society interested in joining the Board, a student looking to compete, or a partner, send us a message and a representative will get back to you.</p>
-        <div class="contact-links">
-          <a href="{{ site.instagram }}" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            Instagram
-          </a>
-          <a href="{{ site.linkedin }}" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            LinkedIn
-          </a>
+        <div class="contact-channels">
           {% if site.email %}
-          <a href="mailto:{{ site.email }}">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
-            {{ site.email }}
+          <a class="contact-channel" href="mailto:{{ site.email }}">
+            <span class="cc-label">Email</span>
+            <span class="cc-value">{{ site.email }}</span>
           </a>
           {% endif %}
+          <a class="contact-channel" href="{{ site.instagram }}" target="_blank" rel="noopener">
+            <span class="cc-label">Instagram</span>
+            <span class="cc-value">Follow the Board &rarr;</span>
+          </a>
+          <a class="contact-channel" href="{{ site.linkedin }}" target="_blank" rel="noopener">
+            <span class="cc-label">LinkedIn</span>
+            <span class="cc-value">Connect with us &rarr;</span>
+          </a>
         </div>
       </div>
       <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">

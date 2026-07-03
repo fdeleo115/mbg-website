@@ -1,6 +1,7 @@
 ---
 name: Representative TBA
-role: Secretary
+role: Representative
 society: McGill Pre-Law Students' Association
 order: 3
+status: current
 ---

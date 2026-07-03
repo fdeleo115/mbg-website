@@ -42,7 +42,29 @@ collections:
           - Northwest Territories
           - Nunavut
           - Yukon
-      - { label: "Representative", name: "president", widget: "string", required: false, hint: "The society's president or board delegate" }
+      - { label: "Representative (single, legacy)", name: "president", widget: "string", required: false, hint: "Optional. Used only if you don't add Representatives below." }
+      - label: "Representatives"
+        name: "representatives"
+        widget: "list"
+        required: false
+        label_singular: "Representative"
+        summary: "{{fields.name}}{{#if fields.role}} — {{fields.role}}{{/if}}"
+        hint: "Add one or more delegates for this society, each with a headshot. These replace the single legacy field above."
+        fields:
+          - { label: "Name", name: "name", widget: "string" }
+          - { label: "Role / Title", name: "role", widget: "string", required: false, hint: "e.g. President, Delegate, VP Advocacy" }
+          - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Upload a headshot" }
+          - label: "Photo Fit"
+            name: "photoSize"
+            widget: "select"
+            required: false
+            default: "cover"
+            hint: "Fill the circle (crop) or show the entire photo (may leave gaps)"
+            options:
+              - { label: "Fill area (crop to fit)", value: "cover" }
+              - { label: "Show entire photo (may have gaps)", value: "contain" }
+          - { label: "Photo Zoom", name: "photoZoom", widget: "number", required: false, default: 1, value_type: "float", min: 1, max: 3, step: 0.1, hint: "1 = no zoom, 2 = zoom in 2x." }
+          - { label: "Photo Focus (drag to position)", name: "photoPosition", widget: "focal-point", required: false, default: "center", image_field: "photo", hint: "Drag the dot onto the face so it isn't cut off in the round headshot" }
       - { label: "Short Description", name: "blurb", widget: "text", required: false, hint: "One or two sentences about the society" }
       - { label: "Website", name: "website", widget: "string", required: false, hint: "Full URL, e.g. https://..." }
       - { label: "Instagram", name: "instagram", widget: "string", required: false, hint: "Full URL" }
@@ -50,19 +72,96 @@ collections:
       - { label: "Logo Focus (drag to position)", name: "logoPosition", widget: "focal-point", required: false, default: "center", image_field: "logo" }
 
   - name: "board"
-    label: "Board Representatives"
+    label: "The Board — Representatives"
     label_singular: "Representative"
-    description: "The board roster shown on the Board page."
+    description: "The society representatives who sit on the Board. Set Status to Alumni to move a past representative into the Alumni section."
     folder: "src/board"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Name", name: "name", widget: "string" }
-      - { label: "Role / Title", name: "role", widget: "string", hint: "e.g. Chair, Vice-Chair, Representative — Ontario" }
+      - { label: "Role / Title", name: "role", widget: "string", required: false, default: "Representative", hint: "Usually just 'Representative'" }
       - { label: "Society", name: "society", widget: "string", required: false, hint: "Which member society they represent" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        default: "current"
+        options:
+          - { label: "Current", value: "current" }
+          - { label: "Alumni (past representative)", value: "alumni" }
+      - { label: "Term (alumni only)", name: "term", widget: "string", required: false, hint: "e.g. 2024–2025 — shown for alumni" }
       - { label: "Display Order", name: "order", widget: "number", value_type: "int", hint: "1 = shown first" }
       - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Upload a headshot" }
+      - label: "Photo Fit"
+        name: "photoSize"
+        widget: "select"
+        required: false
+        default: "cover"
+        hint: "Fill the circle (crop) or show the entire photo (may leave gaps)"
+        options:
+          - { label: "Fill area (crop to fit)", value: "cover" }
+          - { label: "Show entire photo (may have gaps)", value: "contain" }
+      - { label: "Photo Zoom", name: "photoZoom", widget: "number", required: false, default: 1, value_type: "float", min: 1, max: 3, step: 0.1, hint: "1 = no zoom, 2 = zoom in 2x. Use with the focus below to frame the face." }
       - { label: "Photo Focus (drag to position)", name: "photoPosition", widget: "focal-point", required: false, default: "center", image_field: "photo", hint: "Drag the dot onto the face so it isn't cut off in the round headshot" }
+
+  - name: "officials"
+    label: "Elected Officials"
+    label_singular: "Official"
+    description: "The elected exec who organize and run the Board (Chair, Vice-Chair, Secretary, etc.). Set Status to Alumni for past officials."
+    folder: "src/officials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role / Title", name: "role", widget: "string", hint: "e.g. Chair, Vice-Chair, Secretary, Treasurer" }
+      - { label: "Society", name: "society", widget: "string", required: false, hint: "Their home society (optional)" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        default: "current"
+        options:
+          - { label: "Current", value: "current" }
+          - { label: "Alumni (past official)", value: "alumni" }
+      - { label: "Term (alumni only)", name: "term", widget: "string", required: false, hint: "e.g. 2024–2025 — shown for alumni" }
+      - { label: "Display Order", name: "order", widget: "number", value_type: "int", hint: "1 = shown first" }
+      - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Upload a headshot" }
+      - label: "Photo Fit"
+        name: "photoSize"
+        widget: "select"
+        required: false
+        default: "cover"
+        hint: "Fill the circle (crop) or show the entire photo (may leave gaps)"
+        options:
+          - { label: "Fill area (crop to fit)", value: "cover" }
+          - { label: "Show entire photo (may have gaps)", value: "contain" }
+      - { label: "Photo Zoom", name: "photoZoom", widget: "number", required: false, default: 1, value_type: "float", min: 1, max: 3, step: 0.1, hint: "1 = no zoom, 2 = zoom in 2x." }
+      - { label: "Photo Focus (drag to position)", name: "photoPosition", widget: "focal-point", required: false, default: "center", image_field: "photo", hint: "Drag the dot onto the face so it isn't cut off in the round headshot" }
+
+  - name: "members"
+    label: "Pre-Law Members"
+    label_singular: "Member"
+    description: "Individual pre-law members recognized by the Board (people, not societies)."
+    folder: "src/members"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "University", name: "university", widget: "string", required: false }
+      - { label: "Society", name: "society", widget: "string", required: false, hint: "Their pre-law society, if any" }
+      - { label: "Member Since (year)", name: "year", widget: "string", required: false, hint: "The year they became an officially recognized member, e.g. 2024" }
+      - { label: "Short Description", name: "blurb", widget: "text", required: false, hint: "One line about the member" }
+      - { label: "Display Order", name: "order", widget: "number", value_type: "int", required: false, hint: "1 = shown first" }
+      - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Upload a headshot" }
+      - label: "Photo Fit"
+        name: "photoSize"
+        widget: "select"
+        required: false
+        default: "cover"
+        options:
+          - { label: "Fill area (crop to fit)", value: "cover" }
+          - { label: "Show entire photo (may have gaps)", value: "contain" }
+      - { label: "Photo Zoom", name: "photoZoom", widget: "number", required: false, default: 1, value_type: "float", min: 1, max: 3, step: 0.1 }
+      - { label: "Photo Focus (drag to position)", name: "photoPosition", widget: "focal-point", required: false, default: "center", image_field: "photo", hint: "Drag the dot onto the face" }
 
   - name: "competitions"
     label: "Competitions"
@@ -215,3 +314,44 @@ collections:
             fields:
               - { label: "Question", name: "question", widget: "string" }
               - { label: "Answer", name: "answer", widget: "text" }
+
+      - label: "Championship & Gala Page"
+        name: "gala-page"
+        file: "src/_data/gala.json"
+        fields:
+          - { label: "Eyebrow / Kicker", name: "eyebrow", widget: "string" }
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Intro Paragraph", name: "intro", widget: "text" }
+          - label: "Championship — Status"
+            name: "competitionStatus"
+            widget: "select"
+            default: "proposed"
+            options:
+              - { label: "Under Consideration", value: "proposed" }
+              - { label: "Planned", value: "planned" }
+              - { label: "Confirmed", value: "confirmed" }
+          - { label: "Championship — Title", name: "competitionTitle", widget: "string" }
+          - { label: "Championship — Description", name: "competitionText", widget: "text" }
+          - label: "Banquet — Status"
+            name: "banquetStatus"
+            widget: "select"
+            default: "planned"
+            options:
+              - { label: "Under Consideration", value: "proposed" }
+              - { label: "Planned", value: "planned" }
+              - { label: "Confirmed", value: "confirmed" }
+          - { label: "Banquet — Title", name: "banquetTitle", widget: "string" }
+          - { label: "Banquet — Description", name: "banquetText", widget: "text" }
+          - { label: "Banquet — Date", name: "banquetDate", widget: "string", required: false, hint: "Optional, e.g. Spring 2026" }
+          - { label: "Banquet — Location", name: "banquetLocation", widget: "string", required: false }
+          - { label: "Awards — Intro", name: "awardsIntro", widget: "text", required: false }
+          - label: "Awards"
+            name: "awards"
+            widget: "list"
+            label_singular: "Award"
+            summary: "{{fields.title}}"
+            hint: "The award categories presented at the Gala. Add a recipient once winners are announced."
+            fields:
+              - { label: "Award Name", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text", required: false }
+              - { label: "Recipient (optional)", name: "recipient", widget: "string", required: false, hint: "Leave blank until winners are announced" }
