@@ -1,7 +1,7 @@
 ---
-name: Francesco DeLeo
-role: Chair
+name: Francesco Deleo
+role: Co-Fonder
 society: Guelph-Humber Pre-Law Society
-order: 1
 status: current
+order: 1
 ---
