@@ -1,7 +1,7 @@
 ---
-name: Representative TBA
-role: Secretary
+name: Christabell Zalwango
+role: Co-Founder
 society: McGill Pre-Law Students' Association
-order: 3
 status: current
+order: 3
 ---
